@@ -24,7 +24,15 @@ class vendor
         $_SESSION['loggedin'] = true;
         $_SESSION['id'] = 123;
         $_SESSION['name'] = 'Omer';
-        header("location: index.php");
+        $_SESSION['is_seller'] = false;
+
+        if ($_SESSION['is_seller']){
+          header("location: seller/index.php");
+        }
+        else {
+          header("location: customer/index.php");
+        }
+        
 
         // if ($result) {
         //     if (mysqli_num_rows($result)==1) {
@@ -71,11 +79,11 @@ $O->login();
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Login - VAT Calculator</title>
+  <title>Login - GIKIEats</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" />
-  <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.png">
+  <link rel="shortcut icon" type="image/png" href="assets/images/gikieats_teal.png">
 
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
