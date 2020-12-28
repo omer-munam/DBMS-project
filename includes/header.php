@@ -72,7 +72,6 @@
                                 <ul class="collapse">
                                     <li><a href="SellingInvoices.php" aria-expanded="true"><i class="fa fa-circle fs_i"></i><span class="menu-title">Selling Invoices</span></a>
                                     </li>
-                                    <li><a href="BuyingInvoices.php" aria-expanded="true"><i class="fa fa-circle fs_i"></i><span class="menu-title">Buying Invoices</span></a></li>
                                 </ul>
                             </li>
                         </ul>
