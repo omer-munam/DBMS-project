@@ -28,9 +28,9 @@ class vendor
         $_SESSION['loggedin'] = true;
         $_SESSION['id'] = 123;
         $_SESSION['name'] = 'Omer';
-        $_SESSION['is_seller'] = true;
+        $_SESSION['acc_type'] = 'Seller';
 
-        if ($_SESSION['is_seller']){
+        if ($_SESSION['acc_type'] == 'Seller'){
           header("location: seller/index.php");
         }
         else {

@@ -66,9 +66,8 @@
                                 <th> Product Name</th>
                                 <th> Product Brand</th>
                                 <th> Product Color</th>
-                                <th> Product Quantity</th>
-                                <th> Total Price</th>
-                                <th> Seller Name</th>
+                                <th> Total</th>
+                                <th> Customer </th>
                                 <th> Order Date </th>
                             </tr>
                         </thead>
@@ -95,7 +94,6 @@
                                 <td style="background-color: #ffffff"><?php echo  $prod_brand ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_cat ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_color ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
                             </tr>

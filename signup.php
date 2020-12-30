@@ -8,17 +8,12 @@ class Signup
 
         if (isset($_POST['signup'])) {
             $fname=$_POST['fname'];
-            $lname=$_POST['lname'];
             $password=$_POST['password'];
             $password1=$_POST['password1'];
             $contact=$_POST['contact'];
             $email=$_POST['email'];
             $address = $_POST['address'];
-            $dob = $_POST['dob'];
-            $occupation = $_POST['occupation'];
-            $earnings = $_POST['earnings'];
-            $vatpin = $_POST['vatpin'];
-
+            $accountType = $_POST['optradio'];
 
 
             $query_email ="SELECT email FROM users WHERE email='$email'";
@@ -60,20 +55,20 @@ class Signup
             } else {
                 $password=md5($password);
 
-                $query = "INSERT INTO users (fname , lname, email, address, dob, occupation, earnings, password, contact, vat_pin) VALUES ('$fname', '$lname', '$email','$address', STR_TO_DATE('$dob', '%Y-%m-%d'), '$occupation', $earnings,'$password', '$contact', '$vatpin')";
+                $query = "INSERT INTO users  ";
 
                 if ($conn->query($query)===true) {
                     header('location:index.php');
                     echo "<script>
 
-                 setTimeout(function() {
-        $.bootstrapGrowl('Sign Up Successfully But your account is in pending needs admin approval', {
-            type: 'success',
-            align: 'right',
-            width: 400,
-            stackup_spacing: 30
-        });
-    }, 5000);
+                                setTimeout(function() {
+                        $.bootstrapGrowl('Sign Up Successfull', {
+                            type: 'success',
+                            align: 'right',
+                            width: 400,
+                            stackup_spacing: 30
+                        });
+                    }, 5000);
 
 
 
@@ -104,7 +99,7 @@ class Signup
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>SignUp - VAT Calculator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="assets/images/gikieats_teal.png">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
@@ -145,7 +140,7 @@ class Signup
                 <form action="signup.php" method="POST" name="bform" onsubmit="return Validate()">
                     <div class="login-form-head">
                         <div>
-                            <img src="assets/images/icon/vat.png">
+                            <img src="assets/images/gikieats_teal.png" width="150" height="150">
                         </div>
 
                     </div>
@@ -153,21 +148,11 @@ class Signup
 
                         <div id="Name_div">
                         <div class="form-gp">
-                            <label for="exampleInputEmail1">First Name</label>
+                            <label for="exampleInputEmail1">Name</label>
                             <input type="text" name="fname" id="exampleInputEmail1">
                             <i class=""></i>
                             <div id="Name_error"></div>
                            </div>
-                        </div>
-
-
-                          <div id="lName_div">
-                         <div class="form-gp">
-                           <label for="exampleInputEmail1">Last Name</label>
-                            <input type="text" name="lname" id="exampleInputEmail1">
-                            <i class=""></i>
-                            <div id="lname_error"></div>
-                            </div>
                         </div>
 
                         <div id="emailaddress_div">
@@ -185,33 +170,6 @@ class Signup
                             <input type="text" name="address" id="exampleInputEmail1">
                             <i class=""></i>
                             <div id="address_error"></div>
-                        </div>
-                        </div>
-
-                        <div id="dob_div">
-                          <div class="form-gp">
-                              <label for="exampleInputEmail1">DOB</label>
-                              <input type="date" name="dob" id="exampleInputEmail1">
-                              <i class=""></i>
-                              <div id="dob_error"></div>
-                          </div>
-                        </div>
-
-                        <div id="occupation_div">
-                        <div class="form-gp">
-                            <label for="exampleInputEmail1">Occupation </label>
-                            <input type="text" name="occupation" id="exampleInputEmail1">
-                            <i class=""></i>
-                            <div id="occupation_error"></div>
-                        </div>
-                        </div>
-
-                        <div id="earnings_div">
-                        <div class="form-gp">
-                            <label for="exampleInputEmail1">Yearly Earnings </label>
-                            <input type="Number" name="earnings" id="exampleInputEmail1">
-                            <i class=""></i>
-                            <div id="earnings_error"></div>
                         </div>
                         </div>
 
@@ -233,18 +191,6 @@ class Signup
                         </div>
                         </div>
 
-
-                        <div id="pin_div">
-                        <div class="form-gp">
-                            <label for="exampleInputPassword1">VAT PIN (XXXX)</label>
-                            <input type="text" name="vatpin" maxlength="4" pattern="[0-9]{4}$" id="exampleInputPassword1">
-                            <i class="ti-lock"></i>
-                             <div id="pin_error"></div>
-                        </div>
-                        </div>
-
-
-
                          <div id="contact_div">
                          <div class="form-gp">
                             <label for="exampleInputEmail1">Contact</label>
@@ -252,6 +198,13 @@ class Signup
                             <i class=""></i>
                             <div id="contact_error"></div>
                         </div>
+                        </div>
+
+                        <div class="radio">
+                            <label><input type="radio" name="optradio"> Seller</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio" checked> Customer</label>
                         </div>
 
                         <div class="row mb-4 rmber-area">
@@ -313,31 +266,20 @@ class Signup
 
 <script type="text/javascript">
      var Name = document.forms['bform']['fname'];
-     var lName = document.forms['bform']['lname'];
      var contact = document.forms['bform']['contact'];
-     var earnings = document.forms['bform']['earnings'];
-     var occupation = document.forms['bform']['occupation'];
      var address = document.forms['bform']['address'];
-     var dob = document.forms['bform']['dob'];
      var emailaddress = document.forms['bform']['emailaddress'];
      var password = document.forms['bform']['password'];
      var password1 = document.forms['bform']['password1'];
-     var vatpin = document.forms['bform']['vatpin'];
-
 
 
      // selecting all error display elements
      var Name_error = document.getElementById('Name_error');
-     var lname_error = document.getElementById('lname_error');
       var contact_error = document.getElementById('contact_error');
       var emailaddress_error = document.getElementById('emailaddress_error');
       var password_error = document.getElementById('password_error');
       var password1_error = document.getElementById('password1_error');
-      var earnings_error = document.getElementById('earnings_error');
-      var occupation_error = document.getElementById('occupation_error');
-      var dob_error = document.getElementById('dob_error');
       var address_error = document.getElementById('address_error');
-      var vatpin_error = document.getElementById('vatpin_error');
 
 
 
@@ -346,16 +288,11 @@ class Signup
        // SETTING ALL EVENT LISTENERS
 
     Name.addEventListener('blur', NameVerify, true);
-    lName.addEventListener('blur', lNameVerify, true);
     contact.addEventListener('blur', contactVerify, true);
-    earnings.addEventListener('blur', earningsVerify, true);
-    occupation.addEventListener('blur', occupationVerify, true);
     address.addEventListener('blur', addressVerify, true);
-    dob.addEventListener('blur', dobVerify, true);
     emailaddress.addEventListener('blur', emailaddressVerify, true);
     password.addEventListener('blur', passwordVerify, true);
     password1.addEventListener('blur', password1Verify, true);
-    vatpin.addEventListener('blur', vatpinVerify, true);
 
 
 
@@ -371,20 +308,6 @@ class Signup
     return false;
   }
 
-  if (lName.value == "") {
-    // _Name.style.border = "1px solid red";
-    document.getElementById('lName_div').style.color = "red";
-    lname_error.textContent = "Last Name Is Required";
-    lName.focus();
-    return false;
-  }
-
-  if (vatpin.value == "") {
-    document.getElementById('pin_div').style.color = "red";
-    vatpin_error.textContent = "VAT PIN is Required";
-    vatpin.focus();
-    return false;
-  }
 
   if (contact.value == "") {
     // _Name.style.border = "1px solid red";
@@ -394,35 +317,11 @@ class Signup
     return false;
   }
 
-if (earnings.value == "") {
-    // _Name.style.border = "1px solid red";
-    document.getElementById('earnings_div').style.color = "red";
-    earnings_error.textContent = "Earnings Is Required";
-    earnings.focus();
-    return false;
-  }
-
-  if (occupation.value == "") {
-    // _Name.style.border = "1px solid red";
-    document.getElementById('occupation_div').style.color = "red";
-    occupation_error.textContent = "Occupation Is Required";
-    occupation.focus();
-    return false;
-  }
-
   if (address.value == "") {
     // _Name.style.border = "1px solid red";
     document.getElementById('address_div').style.color = "red";
     address_error.textContent = "Address Is Required";
     address.focus();
-    return false;
-  }
-
-  if (dob.value == "") {
-    // _Name.style.border = "1px solid red";
-    document.getElementById('occupation_div').style.color = "red";
-    dob_error.textContent = "DOB Is Required";
-    dob.focus();
     return false;
   }
 
@@ -463,20 +362,6 @@ if (earnings.value == "") {
    return true;
   }}
 
-  function vatpinVerify(){
-    document.getElementById('pin_div').style.color = "#5cd3b4";
-   vatpin_error.innerHTML = "";
-   return true;
-  }
-
-  function lNameVerify() {
-
- if (lName.value != "") {
-   // shop_name.style.border = "1px solid #5cd3b4";
-   document.getElementById('lName_div').style.color = "#5cd3b4";
-   lName_error.innerHTML = "";
-   return true;
-  }}
 
   function contactVerify() {
 
@@ -493,33 +378,6 @@ if (earnings.value == "") {
    // shop_name.style.border = "1px solid #5cd3b4";
    document.getElementById('address_div').style.color = "#5cd3b4";
    address_error.innerHTML = "";
-   return true;
-  }}
-
-  function dobVerify() {
-
-    if (dob.value != "") {
-   // shop_name.style.border = "1px solid #5cd3b4";
-   document.getElementById('dob_div').style.color = "#5cd3b4";
-   dob_error.innerHTML = "";
-   return true;
-  }}
-
-  function earningsVerify() {
-
-    if (contact.value != "") {
-   // shop_name.style.border = "1px solid #5cd3b4";
-   document.getElementById('earnings_div').style.color = "#5cd3b4";
-   earnings_error.innerHTML = "";
-   return true;
-  }}
-
-  function occupationVerify() {
-
-    if (occupation.value != "") {
-   // shop_name.style.border = "1px solid #5cd3b4";
-   document.getElementById('occupation_div').style.color = "#5cd3b4";
-   occupation_error.innerHTML = "";
    return true;
   }}
 
