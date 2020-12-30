@@ -8,24 +8,33 @@
         die();
     }
 
-    // if (isset($_POST["actionbtndecline"])) {
-    //     $id = $_POST['nameram'];
-    //     echo $id;
-    //     $query = "DELETE FROM invoices WHERE id='$id'";
+    if (isset($_POST["confirmchanges"])) {
+        $id = $row['id'];
 
-    //     if ($conn->query($query)==true) {
-    //         echo "<script>  setTimeout(function() {
-    //             $.bootstrapGrowl('The Data Has Been Deleted Successfully', {
-    //                 type: 'danger',
-    //                 align: 'right',
-    //                 width: 400,
-    //                 stackup_spacing: 30
-    //             });
-    //         }, 1000);</script>";
-    //     } else {
-    //         echo "error".$query."<br>".$conn->error;
-    //     }
-    // }
+        $name = $_POST['name'];
+        $brand = $_POST['brand'];
+        $cat = $_POST['cat'];
+        $color = $_POST['color'];
+        $price = $_POST['price'];
+
+        $query = "UPDATE ";
+
+        if ($conn->query($query)==true) {
+            echo "<script>
+                            setTimeout(function() {
+                $.bootstrapGrowl('Product Updated Successfully', {
+                    type: 'success',
+                    align: 'right',
+                    width: 400,
+                    stackup_spacing: 30
+                });
+            }, 3000);
+                    </script>";
+        } else {
+            echo "error".$query."<br>".$conn->error;
+        }
+    }
+
     include('../includes/header.php');
 ?>
 <!-- page title area start -->
@@ -73,6 +82,7 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             <?php
                                 mysqli_set_charset($conn, 'utf8');
                                 $user_id =  $_SESSION['id'];
@@ -99,6 +109,7 @@
 
                                 <td style="background-color: #ffffff"><!-- Button trigger modal -->
                                     <!-- <input type="submit"  name="actionbtndecline" class="btn btn-danger btn-xs" value="Delete"> -->
+                                    <div data-toggle="modal" href="#myModal" data-userid="<?php echo $id; ?>" class="btn btn-primary btn-xs">Edit</div>
                                     <a class="btn btn-danger btn-xs" href="delete.php?id='<?php echo $id?>'">Delete</a>
                                 </td>
                             </tr>
@@ -112,9 +123,61 @@
     </div>
     <input type="hidden" id="ram" name="nameram" value="<?php echo $id; ?>">
 </form>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="#" method="POST"  class="form-horizontal" enctype="multipart/form-data" onsubmit="return Validate()" name="bform" id="uploadForm">
+                <!-- <input type="hidden" name="user_id" value=""> -->
+                <div class="modal-body">
+                    <div class="form-group" align="center">
+                        <div class="col-md-6">
+                            <input type="text" name="name" placeholder="Name" value="" class="form-control" id="Name" required>
+                            <div id="name_error"></div>
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <input type="text" name="brand" placeholder="Brand" value="" class="form-control" id="Brand" required>
+                            <div id="brand_error"></div>
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <input type="text" name="cat" placeholder="Category" value="" class="form-control" id="Category" required>
+                            <div id="cat_error"></div>
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <input type="text" name="color" placeholder="Color" value="" class="form-control" id="Color" required>
+                            <div id="color_error"></div>
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <input type="Number" step="0.01" name="price" placeholder="Price" value="" class="form-control" id="Price" required>
+                            <div id="price_error"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="Submit" name="confirmchanges" id="confirmchanges" class="btn btn-success">Confirm Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('#example').DataTable();
+    });
+
+    $('#myModal').on('show.bs.modal', function(e) {
+        var userid = $(e.relatedTarget).data('userid');
+        $(e.currentTarget).find('input[name="user_id"]').val(userid);
     });
 </script>
 
