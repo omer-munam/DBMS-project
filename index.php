@@ -9,7 +9,12 @@ class vendor
     include("includes/connection.php");
 
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
-        header('location:index.php');
+      if ($_SESSION['is_seller']){
+        header("location: seller/index.php");
+      }
+      else {
+        header("location: customer/index.php");
+      }
     }
 
   
@@ -20,11 +25,10 @@ class vendor
         $query = "SELECT * FROM users WHERE email = '$emailaddress' && password = '$password' ";
         $result=mysqli_query($conn, $query);
 
-        echo "hello";
         $_SESSION['loggedin'] = true;
         $_SESSION['id'] = 123;
         $_SESSION['name'] = 'Omer';
-        $_SESSION['is_seller'] = false;
+        $_SESSION['is_seller'] = true;
 
         if ($_SESSION['is_seller']){
           header("location: seller/index.php");

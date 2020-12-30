@@ -63,7 +63,7 @@ class Signup
                 $query = "INSERT INTO users (fname , lname, email, address, dob, occupation, earnings, password, contact, vat_pin) VALUES ('$fname', '$lname', '$email','$address', STR_TO_DATE('$dob', '%Y-%m-%d'), '$occupation', $earnings,'$password', '$contact', '$vatpin')";
 
                 if ($conn->query($query)===true) {
-                    header('location:login.php');
+                    header('location:index.php');
                     echo "<script>
 
                  setTimeout(function() {
@@ -85,7 +85,7 @@ class Signup
 
 
             if (isset($_POST['signin'])) {
-                header('location:login.php');
+                header('location:index.php');
             }
         }
     }
@@ -267,7 +267,7 @@ class Signup
                         </div>
                         <div class="submit-btn-area">
                             <button id="form_submit" name="signup" type="submit">SIGN UP<i class="ti-arrow-right"></i></button><br>
-                            <button id="form_submit" name="signin" type="submit"><a href="login.php">SIGN IN</a><i class="ti-arrow-right"></i></button><br>
+                            <button id="form_submit" name="signin" type="submit"><a href="index.php">SIGN IN</a><i class="ti-arrow-right"></i></button><br>
                             <div>
                            <!--  <a href="">Signup</a> -->
 

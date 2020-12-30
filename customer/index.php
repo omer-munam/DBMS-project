@@ -3,7 +3,7 @@
 include("../includes/connection.php");
 
    if (!isset($_SESSION['loggedin'])) {
-       header('location:../login.php');
+       header('location:../index.php');
        die();
    }
     $id = $_SESSION['id'];

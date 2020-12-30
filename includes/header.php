@@ -62,15 +62,15 @@
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="index.php" aria-expanded="false"><i class="fa fa-dashboard"></i><span>Form 1</span></a>
+                                <a href="index.php" aria-expanded="false"><i class="fa fa-dashboard"></i><span>Add Product</span></a>
                             </li>
                             <li>
-                                <a href="Form2.php" aria-expanded="false"><i class="fa fa-dashboard"></i><span>Tax Declaration Form</span></a>
+                                <a href="Orders.php" aria-expanded="false"><i class="fa fa-dashboard"></i><span>Orders</span></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)" aria-expanded="false"><i class="fa fa-product-hunt"></i> <span>Invoices</span></a>
+                                <a href="javascript:void(0)" aria-expanded="false"><i class="fa fa-product-hunt"></i> <span>Products</span></a>
                                 <ul class="collapse">
-                                    <li><a href="SellingInvoices.php" aria-expanded="true"><i class="fa fa-circle fs_i"></i><span class="menu-title">Selling Invoices</span></a>
+                                    <li><a href="MyProducts.php" aria-expanded="true"><i class="fa fa-circle fs_i"></i><span class="menu-title">My Products</span></a>
                                     </li>
                                 </ul>
                             </li>

@@ -7,7 +7,7 @@ if($_SESSION['loggedin'] == 1) {
 	header('location:index.php');
 } else {
 	session_destroy();
-	header('location:../login.php');
+	header('location:../index.php');
 }
 
 

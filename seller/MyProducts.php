@@ -33,11 +33,11 @@
     <div class="row align-items-center">
         <div class="col-sm-6">
             <div class="breadcrumbs-area clearfix">
-                <h4 class="page-title pull-left">Selling Invoices</h4>
+                <h4 class="page-title pull-left">My Products</h4>
                 <ul class="breadcrumbs pull-left">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#"><span>Invoices</span></a></li>
-                    <li><span>Selling</span></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="#"><span>Products</span></a></li>
+                    <li><span>My Products</span></li>
                 </ul>
             </div>
         </div>
@@ -63,13 +63,12 @@
                     <table id="example" class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th width="100px"> Invoice Number</th>
-                                <th> Product Name </th>
-                                <th> Product Price </th>
-
-                                <th> Product Quantity</th>
-                                <th> Invoice Type </th>
-                                <th> Invoice Date </th>
+                                <th width="100px"> Product ID</th>
+                                <th> Product Name</th>
+                                <th> Product Brand</th>
+                                <th> Product Category</th>
+                                <th> Product Color</th>
+                                <th> Product Price</th>
                                 <th> Action </th>
                             </tr>
                         </thead>
@@ -77,27 +76,26 @@
                             <?php
                                 mysqli_set_charset($conn, 'utf8');
                                 $user_id =  $_SESSION['id'];
-                                $query = "SELECT * FROM invoices WHERE user_id='$user_id' AND inv_type='Selling'";
+                                $query = "SELECT * FROM";
 
                                 $result = mysqli_query($conn, $query);
                                 $row_cnt = $result->num_rows;
                                     if ($row_cnt>0) {
                                         while ($row=$result->fetch_assoc()) {
-                                            $id = $row["id"];
-                                            $inv_num =  $row['inv_number'];
+                                            $id = $row["prod_id"];
                                             $prod_name =  $row['prod_name'];
                                             $prod_price =  $row['prod_price'];
-                                            $prod_qty =  $row['prod_qty'];
-                                            $inv_type =  $row['inv_type'];
-                                            $inv_date = $row['inv_date'];
+                                            $prod_color =  $row['prod_color'];
+                                            $prod_brand =  $row['prod_brand'];
+                                            $prod_cat = $row['prod_cat'];
                             ?>
                             <tr>
-                                <td style="background-color: #ffffff"><?php echo  $inv_num ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $id ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_name ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $prod_brand ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $prod_cat ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $prod_color ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_qty ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $inv_type ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $inv_date ?></td>
 
                                 <td style="background-color: #ffffff"><!-- Button trigger modal -->
                                     <!-- <input type="submit"  name="actionbtndecline" class="btn btn-danger btn-xs" value="Delete"> -->

@@ -719,8 +719,8 @@ ul.breadcrumbs {
             align-items: center;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
-    background: -webkit-linear-gradient(left, #e47226 0%, #873e2d 100%);
-    background: linear-gradient(to right, #e47226 0%, #873e2d 100%);
+    background: -webkit-linear-gradient(left, #52b5b5 0%, #008080 100%);
+    background: linear-gradient(to right, #52b5b5 0%, #008080 100%);
     padding: 17px 38px;
     position: relative;
 }

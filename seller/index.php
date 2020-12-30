@@ -3,22 +3,26 @@
 include("../includes/connection.php");
 
    if (!isset($_SESSION['loggedin'])) {
-       header('location: ../login.php');
+       header('location: ../index.php');
        die();
    }
     $id = $_SESSION['id'];
     if (isset($_POST['form1_submit'])) {
         mysqli_set_charset($conn, "utf8");
       
-        $inv_num = $_POST['invoice_num'];
+        $prod_name = $_POST['prod_name'];
+        $prod_brand = $_POST['prod_brand'];
+        $prod_cat = $_POST['prod_cat'];
+        $prod_price = $_POST['prod_price'];
+        $prod_color = $_POST['prod_color'];
 
             
-        $query = "INSERT INTO invoices(user_id,inv_number, prod_name, prod_price,prod_qty,inv_type, inv_date) VALUES('$id', '$inv_num', '$prod_name','$prod_price','$prod_qty','$invoice_type',STR_TO_DATE('$invoice_date', '%Y-%m-%d'))";
+        $query = "INSERT INTO ";
 
      
         if ($conn->query($query)===true) {
             echo "<script>setTimeout(function() {
-          $.bootstrapGrowl('Invoice Added Successfuly!', {
+          $.bootstrapGrowl('Product Added Successfuly!', {
               type: 'success',
               align: 'right',
               width: 400,
@@ -39,10 +43,10 @@ include("../includes/connection.php");
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Form 1</h4>
+                    <h4 class="page-title pull-left">Add Product</h4>
                     <ul class="breadcrumbs pull-left">
                         <li><a href="index.php">Home</a></li>
-                        <li><span>Form 1</span></li>
+                        <li><span>Add Product</span></li>
                     </ul>
                    
                 </div>
@@ -67,27 +71,37 @@ include("../includes/connection.php");
             <div class="single-report">
               <div class="s-report-inner pr--20 pt--30 mb-3">
                 <div class="s-report-title d-flex justify-content-center">
-                  <h4 class="header-title mb-0" style="font-size: 28px;">Form 1</h4>
+                  <h4 class="header-title mb-0" style="font-size: 28px;">Add Product</h4>
                 </div>
                       
             <!-- <div class="d-flex justify-content-center pb-2"> -->
                 <!-- <h2><?php //echo $row_count3;?></h2> -->
                 <div class="form-group">
-                  <div id="product_name_div">
-                    <div class="form-group">
-                      <div id="product_name_div">
-                          <label class="col-xs-6">Invoice Number<span class="validatestar">*</span></label>
-                          <div class="col-xs-6">
-                            <input type="text" required class="form-control" name="invoice_num" >
-                          <div id="product_name_error"></div>
-                        </div>
-                      </div>          
-                    </div>
                     <div class="form-group">
                       <div id="product_name_div">
                         <label class="col-xs-6">Product Name<span class="validatestar">*</span></label>
                         <div class="col-xs-6">
                           <input type="text" required class="form-control" name="prod_name" >
+                          <div id="product_name_error"></div>
+                        </div>
+                      </div>          
+                    </div>
+
+                    <div class="form-group">
+                      <div id="product_name_div">
+                        <label class="col-xs-6">Product Brand<span class="validatestar">*</span></label>
+                        <div class="col-xs-6">
+                          <input type="text" required class="form-control" name="prod_brand" >
+                          <div id="product_name_error"></div>
+                        </div>
+                      </div>          
+                    </div>
+
+                    <div class="form-group">
+                      <div id="product_name_div">
+                        <label class="col-xs-6">Product Category<span class="validatestar">*</span></label>
+                        <div class="col-xs-6">
+                          <input type="text" required class="form-control" name="prod_cat" >
                           <div id="product_name_error"></div>
                         </div>
                       </div>          
@@ -105,39 +119,16 @@ include("../includes/connection.php");
 
                     <div class="form-group">
                         <div id="product_name_div">
-                      <label class="col-xs-6">Product Quantity<span class="validatestar">*</span></label>
+                      <label class="col-xs-6">Product Color<span class="validatestar">*</span></label>
                       <div class="col-xs-6">
-                            <input type="Number" required class="form-control" name="prod_qty" >
+                            <input type="text" required class="form-control" name="prod_color" >
                           <div id="product_name_error"></div>
                         </div>
                       </div>          
                     </div>  
                     
-                    <div class="form-group">
-                      <div id="product_name_div">
-                          <label class="col-xs-6">Invoice Type<span class="validatestar">*</span></label>
-                          <div class="col-xs-6">
-                            <select name="invoice_type" required id="invoice_type" style="height: 40px" class="form-control">
-                              <option value="Buying">Buying Invoice</option>
-                              <option value="Selling">Selling Invoice</option>
-                            </select>
-                            <div id="product_name_error"></div>
-                        </div>
-                      </div>          
-                    </div>
-
-                    <div class="form-group">
-                      <div id="product_name_div">
-                        <label class="col-xs-6">Invoice Date<span class="validatestar">*</span></label>
-                        <div class="col-xs-6">
-                          <input type="Date" required class="form-control" name="invoice_date" >
-                          <div id="product_name_error"></div>
-                        </div>
-                      </div>          
-                    </div>
-                    
                     <div style="text-align: center;">
-                      <button type="submit" class="btn btn-secondary btn-md" name="form1_submit">Submit</button>
+                      <button type="submit" class="btn btn-success btn-md" name="form1_submit">Add Product</button>
                     </div>
                   </div>                  
                 </div>
