@@ -55,7 +55,7 @@ class Signup
             } else {
                 $password=md5($password);
 
-                $query = "INSERT INTO users  ";
+                $query = "INSERT INTO users (fname, password, contact, email, address, accountType) VALUES ('$fname', '$password', '$contact', '$email', '$address', '$accountType')";
 
                 if ($conn->query($query)===true) {
                     header('location:index.php');
@@ -97,7 +97,7 @@ class Signup
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>SignUp - VAT Calculator</title>
+    <title>SignUp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="assets/images/gikieats_teal.png">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -140,7 +140,7 @@ class Signup
                 <form action="signup.php" method="POST" name="bform" onsubmit="return Validate()">
                     <div class="login-form-head">
                         <div>
-                            <img src="assets/images/gikieats_teal.png" width="150" height="150">
+                            <img src="assets/images/ecommerce.jpg" width="400" height="150">
                         </div>
 
                     </div>
@@ -201,10 +201,10 @@ class Signup
                         </div>
 
                         <div class="radio">
-                            <label><input type="radio" name="optradio"> Seller</label>
+                            <label><input type="radio" name="optradio" value="seller"> Seller</label>
                         </div>
                         <div class="radio">
-                            <label><input type="radio" name="optradio" checked> Customer</label>
+                            <label><input type="radio" name="optradio" value="customer" checked> Customer</label>
                         </div>
 
                         <div class="row mb-4 rmber-area">

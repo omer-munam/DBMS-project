@@ -67,35 +67,34 @@
                                 <th> Product Brand</th>
                                 <th> Product Color</th>
                                 <th> Total</th>
-                                <th> Customer </th>
                                 <th> Order Date </th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 mysqli_set_charset($conn, 'utf8');
-                                $user_id =  $_SESSION['id'];
-                                $query = "SELECT * FROM";
+                                $cust_id =  $_SESSION['id'];
+                                $query = "SELECT o.*, p.* FROM orders o INNER JOIN ord_prod_rel opr ON o.cust_id = $cust_id AND o.o_id = opr.o_id INNER JOIN product p ON opr.p_id = p.p_id";
 
                                 $result = mysqli_query($conn, $query);
                                 $row_cnt = $result->num_rows;
                                     if ($row_cnt>0) {
                                         while ($row=$result->fetch_assoc()) {
-                                            $id = $row["prod_id"];
-                                            $prod_name =  $row['prod_name'];
-                                            $prod_price =  $row['prod_price'];
-                                            $prod_color =  $row['prod_color'];
-                                            $prod_brand =  $row['prod_brand'];
-                                            $prod_cat = $row['prod_cat'];
+
+                                            $ord_id = $row["o_id"];
+                                            $prod_name =  $row['p_name'];
+                                            $prod_price =  $row['p_price'] * $row['qty'];
+                                            $prod_color =  $row['p_color'];
+                                            $prod_brand =  $row['p_brand'];
+                                            $date = $row['ordered_at'] 
                             ?>
                             <tr>
-                                <td style="background-color: #ffffff"><?php echo  $id ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $ord_id ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_name ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_brand ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_cat ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $prod_brand ?></td>                                
                                 <td style="background-color: #ffffff"><?php echo  $prod_color ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $date ?></td>
                             </tr>
                             <?php }} ?>
 

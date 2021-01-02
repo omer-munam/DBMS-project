@@ -23,14 +23,15 @@ class vendor
         $password = md5($_POST["password"]);
 
         $query = "SELECT * FROM users WHERE email = '$emailaddress' && password = '$password' ";
-        $result=mysqli_query($conn, $query);
+        $result = mysqli_query($conn, $query);
+        $user = mysqli_fetch_array($result);
 
         $_SESSION['loggedin'] = true;
-        $_SESSION['id'] = 123;
-        $_SESSION['name'] = 'Omer';
-        $_SESSION['acc_type'] = 'Seller';
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['name'] = $user['fname'];
+        $_SESSION['acc_type'] = $user['accountType'];
 
-        if ($_SESSION['acc_type'] == 'Seller'){
+        if ($_SESSION['acc_type'] == 'seller'){
           header("location: seller/index.php");
         }
         else {
@@ -83,7 +84,7 @@ $O->login();
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Login - GIKIEats</title>
+  <title>Login | E-Commerce</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" />
@@ -129,7 +130,7 @@ $O->login();
         <form action="" method="POST" name="bform" onsubmit="return Validate()">
           <div class="login-form-head">
             <div>
-              <img src="assets/images/gikieats_teal.png" width="150" height="150">
+              <img src="assets/images/ecommerce.jpg" width="400" height="150">
             </div>
 
           </div>

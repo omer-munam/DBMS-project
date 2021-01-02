@@ -16,11 +16,13 @@ include("../includes/connection.php");
         $prod_price = $_POST['prod_price'];
         $prod_color = $_POST['prod_color'];
 
-            
-        $query = "INSERT INTO ";
+        $key = uniqid();
+        $seller_id = $_SESSION['id'];
+        $query1 = "INSERT INTO product (p_id, p_name, p_brand, p_cat, p_price, p_color) VALUES ('$key', '$prod_name', '$prod_brand', '$prod_cat', '$prod_price', '$prod_color')";
+        $query2 = "INSERT INTO seller_prod_rel (p_id, s_id) VALUES ('$key', '$seller_id')";
 
      
-        if ($conn->query($query)===true) {
+        if ($conn->query($query1)===true && $conn->query($query2)===true) {
             echo "<script>setTimeout(function() {
           $.bootstrapGrowl('Product Added Successfuly!', {
               type: 'success',
@@ -30,7 +32,7 @@ include("../includes/connection.php");
           });
       }, 3000);</script>";
         } else {
-            echo "error".$query."<br>".$conn->error;
+            echo "error".$query1."<br>".$query2."<br>".$conn->error;
         }
     }
 

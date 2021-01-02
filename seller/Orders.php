@@ -63,39 +63,43 @@
                         <thead>
                             <tr>
                                 <th width="100px"> Order ID</th>
+                                <th> Product ID`</th>
                                 <th> Product Name</th>
-                                <th> Product Brand</th>
-                                <th> Product Color</th>
                                 <th> Total</th>
-                                <th> Customer </th>
-                                <th> Order Date </th>
+                                <th> Customer Name</th>
+                                <th> Contact</th>
+                                <th> Adrress</th>
+                                <th> Order Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 mysqli_set_charset($conn, 'utf8');
-                                $user_id =  $_SESSION['id'];
-                                $query = "SELECT * FROM";
+                                $seller_id =  $_SESSION['id'];
+                                $query = "SELECT o.o_id, o.ordered_at, p.p_id, p.p_name, p.p_price, o.qty, u.fname, u.contact, u.address  FROM seller_prod_rel spr INNER JOIN ord_prod_rel opr ON spr.p_id = opr.p_id AND spr.s_id = $seller_id INNER JOIN product p ON spr.p_id = p.p_id  INNER JOIN orders o ON opr.o_id = o.o_id INNER JOIN users u ON o.cust_id = u.id";
 
                                 $result = mysqli_query($conn, $query);
                                 $row_cnt = $result->num_rows;
                                     if ($row_cnt>0) {
                                         while ($row=$result->fetch_assoc()) {
-                                            $id = $row["prod_id"];
-                                            $prod_name =  $row['prod_name'];
-                                            $prod_price =  $row['prod_price'];
-                                            $prod_color =  $row['prod_color'];
-                                            $prod_brand =  $row['prod_brand'];
-                                            $prod_cat = $row['prod_cat'];
+                                            $ord_id = $row["o_id"];
+                                            $prod_id =  $row['p_id'];
+                                            $prod_name =  $row['p_name'];
+                                            $prod_price =  $row['p_price'] * $row['qty'];
+                                            $cust_name =  $row['fname'];
+                                            $cust_addr = $row['address'];
+                                            $cust_contact = $row['contact'];
+                                            $ord_date = $row['ordered_at'];
                             ?>
                             <tr>
-                                <td style="background-color: #ffffff"><?php echo  $id ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $ord_id ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $prod_id ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_name ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_brand ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_cat ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_color ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $cust_name ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $cust_addr ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $cust_contact ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $ord_date ?></td>
                             </tr>
                             <?php }} ?>
 

@@ -1,7 +1,7 @@
 </div>
 <footer>
     <div class="footer-area">
-        <p>© GIKI Eats</p>
+        <p>© E-Commerce</p>
     </div>
 </footer>
 

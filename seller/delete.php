@@ -3,9 +3,11 @@
     if(isset($_GET['id'])) {
         $id = $_GET['id'];
         // echo $id;
-        $query = "DELETE FROM products WHERE id=$id";
 
-        if ($conn->query($query)==true) {
+        $query1 = "DELETE o FROM orders o INNER JOIN ord_prod_rel opr ON o.o_id = opr.o_id WHERE opr.p_id = $id";
+        $query2 = "DELETE FROM product WHERE p_id = $id";
+
+        if ($conn->query($query1)===true && $conn->query($query2)===true) {
             echo "<script>  setTimeout(function() {
                 $.bootstrapGrowl('The Product Has Been Deleted Successfully', {
                     type: 'danger',

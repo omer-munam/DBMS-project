@@ -8,24 +8,6 @@
         die();
     }
 
-    if (isset($_POST["actionbtnbuy"])) {
-        $id = $_POST['nameram'];
-        echo $id;
-        $query = ""; //add to ordeers
-
-        if ($conn->query($query)==true) {
-            echo "<script>  setTimeout(function() {
-                $.bootstrapGrowl('Item Purchased', {
-                    type: 'danger',
-                    align: 'right',
-                    width: 400,
-                    stackup_spacing: 30
-                });
-            }, 1000);</script>";
-        } else {
-            echo "error".$query."<br>".$conn->error;
-        }
-    }
     include('../includes/headerCust.php');
 ?>
 <!-- page title area start -->
@@ -76,19 +58,20 @@
                             <?php
                                 mysqli_set_charset($conn, 'utf8');
                                 $user_id =  $_SESSION['id'];
-                                $query = "SELECT * FROM";
+                                $query = "SELECT * FROM product";
 
                                 $result = mysqli_query($conn, $query);
                                 $row_cnt = $result->num_rows;
                                     if ($row_cnt>0) {
                                         while ($row=$result->fetch_assoc()) {
-                                            $id = $row["prod_id"];
-                                            $prod_name =  $row['prod_name'];
-                                            $prod_price =  $row['prod_price'];
-                                            $prod_color =  $row['prod_color'];
-                                            $prod_brand =  $row['prod_brand'];
-                                            $prod_cat = $row['prod_cat'];
-                                            $prod_seller = $row[''];
+                                            $id = $row["p_id"];
+                                            $prod_name =  $row['p_name'];
+                                            $prod_price =  $row['p_price'];
+                                            $prod_color =  $row['p_color'];
+                                            $prod_brand =  $row['p_brand'];
+                                            $prod_cat = $row['p_cat'];
+                                            $seller_id =   mysqli_query($conn, "SELECT s_id from seller_prod_rel WHERE p_id = '$id'")->fetch_assoc()['s_id'];
+                                            $seller_name = mysqli_query($conn, "SELECT fname from users WHERE id = $seller_id")->fetch_assoc()['fname'];
                             ?>
                             <tr>
                                 <td style="background-color: #ffffff"><?php echo  $id ?></td>
@@ -97,10 +80,9 @@
                                 <td style="background-color: #ffffff"><?php echo  $prod_cat ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_color ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_seller ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $seller_name ?></td>
                                 <td style="background-color: #ffffff"><!-- Button trigger modal -->
-                                    <input type="submit"  name="actionbtnbuy" class="btn btn-success btn-xs" value="Buy">
-                                    <!-- <a class="btn btn-success btn-xs" >Buy</a> -->
+                                <a class="btn btn-success btn-xs" href="buy.php?id=<?php echo $id?>&name=<?php echo $prod_name?>">Buy</a>
                                 </td>
                             </tr>
                             <?php }} ?>
@@ -111,7 +93,6 @@
             </div>
         </div>
     </div>
-    <input type="hidden" id="ram" name="nameram" value="<?php echo $id; ?>">
 </form>
 <script type="text/javascript">
     $(document).ready(function() {
