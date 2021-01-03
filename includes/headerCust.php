@@ -54,7 +54,7 @@
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                    <a href="index.php"><img src="../assets/images/gikieats_teal.png" width="150" height="150"></a>
+                    <a href="index.php"><img src="../assets/images/ecommerce.jpg" width="150" height="150"></a>
                 </div>
             </div>
             <div class="main-menu">

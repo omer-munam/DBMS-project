@@ -8,24 +8,6 @@
         die();
     }
 
-    // if (isset($_POST["actionbtndecline"])) {
-    //     $id = $_POST['nameram'];
-    //     echo $id;
-    //     $query = "DELETE FROM invoices WHERE id='$id'";
-
-    //     if ($conn->query($query)==true) {
-    //         echo "<script>  setTimeout(function() {
-    //             $.bootstrapGrowl('The Data Has Been Deleted Successfully', {
-    //                 type: 'danger',
-    //                 align: 'right',
-    //                 width: 400,
-    //                 stackup_spacing: 30
-    //             });
-    //         }, 1000);</script>";
-    //     } else {
-    //         echo "error".$query."<br>".$conn->error;
-    //     }
-    // }
     include('../includes/headerCust.php');
 ?>
 <!-- page title area start -->
@@ -68,6 +50,8 @@
                                 <th> Product Color</th>
                                 <th> Total</th>
                                 <th> Order Date </th>
+                                <th> Status </th>
+                                <th> Action </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,7 +70,8 @@
                                             $prod_price =  $row['p_price'] * $row['qty'];
                                             $prod_color =  $row['p_color'];
                                             $prod_brand =  $row['p_brand'];
-                                            $date = $row['ordered_at'] 
+                                            $date = $row['ordered_at'];
+                                            $status = $row['confirmed'];
                             ?>
                             <tr>
                                 <td style="background-color: #ffffff"><?php echo  $ord_id ?></td>
@@ -95,6 +80,14 @@
                                 <td style="background-color: #ffffff"><?php echo  $prod_color ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $date ?></td>
+                                <td style="background-color: #ffffff; font-style: italic;"><?php echo  $status ?></td>
+                                <td style="background-color: #ffffff">
+                                    <?php if($status === 'pending') { ?>
+                                        <a class="btn btn-danger btn-xs" href="delOrder.php?id='<?php echo $ord_id ?>'">Cancel</a>
+                                    <?php } else if($status == 'confirmed') { ?>
+                                        <a class="btn btn-success btn-xs" href="receive.php?id='<?php echo $ord_id ?>'">Received</a>
+                                    <?php } ?>
+                                </td>
                             </tr>
                             <?php }} ?>
 
@@ -104,7 +97,6 @@
             </div>
         </div>
     </div>
-    <input type="hidden" id="ram" name="nameram" value="<?php echo $id; ?>">
 </form>
 <script type="text/javascript">
     $(document).ready(function() {
