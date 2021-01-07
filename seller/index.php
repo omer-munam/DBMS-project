@@ -1,40 +1,53 @@
 <?php
  session_start();
 include("../includes/connection.php");
+require_once "../vendor/autoload.php";
 
    if (!isset($_SESSION['loggedin'])) {
        header('location: ../index.php');
        die();
    }
-    $id = $_SESSION['id'];
-    if (isset($_POST['form1_submit'])) {
-        mysqli_set_charset($conn, "utf8");
-      
-        $prod_name = $_POST['prod_name'];
-        $prod_brand = $_POST['prod_brand'];
-        $prod_cat = $_POST['prod_cat'];
-        $prod_price = $_POST['prod_price'];
-        $prod_color = $_POST['prod_color'];
 
-        $key = uniqid();
-        $seller_id = $_SESSION['id'];
-        $query1 = "INSERT INTO product (p_id, p_name, p_brand, p_cat, p_price, p_color) VALUES ('$key', '$prod_name', '$prod_brand', '$prod_cat', '$prod_price', '$prod_color')";
-        $query2 = "INSERT INTO seller_prod_rel (p_id, s_id) VALUES ('$key', '$seller_id')";
+   \Cloudinary::config(array( 
+    "cloud_name" => 'dzmhafzdk', 
+    "api_key" => '691945255776953', 
+    "api_secret" => 'Z8DlmlIEhunlqxf_oL7Wt9eyk3Q'
+  ));
+
+  $target_dir = "./uploads/";
+  
+  $id = $_SESSION['id'];
+  if (isset($_POST['form1_submit'])) {
+      mysqli_set_charset($conn, "utf8");
+      
+      $prod_name = $_POST['prod_name'];
+      $prod_brand = $_POST['prod_brand'];
+      $prod_cat = $_POST['prod_cat'];
+      $prod_price = $_POST['prod_price'];
+      $prod_color = $_POST['prod_color'];
+      $stock = $_POST['stock'];
+
+      $target_file = $target_dir . basename($_FILES["img"]["name"]);
+      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+      move_uploaded_file($_FILES["img"]["tmp_name"], $target_file);
+       
+      $arr_result = \Cloudinary\Uploader::upload(__DIR__.$target_file);
+      // print_r($arr_result['secure_url']);
+      $imgURL = $arr_result['secure_url'];
+
+      $key = uniqid();
+      $seller_id = $_SESSION['id'];
+      $query1 = "INSERT INTO product (p_id, p_name, p_brand, p_cat, p_price, p_color, stock, imgURL) VALUES ('$key', '$prod_name', '$prod_brand', '$prod_cat', '$prod_price', '$prod_color', '$stock', '$imgURL')";
+      $query2 = "INSERT INTO seller_prod_rel (p_id, s_id) VALUES ('$key', '$seller_id')";
 
      
-        if ($conn->query($query1)===true && $conn->query($query2)===true) {
-            echo "<script>setTimeout(function() {
-          $.bootstrapGrowl('Product Added Successfuly!', {
-              type: 'success',
-              align: 'right',
-              width: 400,
-              stackup_spacing: 30
-          });
-      }, 3000);</script>";
-        } else {
+      if ($conn->query($query1)===true && $conn->query($query2)===true) {
+          header('location:MyProducts.php');
+      } else {
             echo "error".$query1."<br>".$query2."<br>".$conn->error;
-        }
-    }
+      }
+  }
 
     include('../includes/header.php');
 ?>
@@ -127,7 +140,27 @@ include("../includes/connection.php");
                           <div id="product_name_error"></div>
                         </div>
                       </div>          
-                    </div>  
+                    </div>
+
+                    <div class="form-group">
+                        <div id="stock_div">
+                      <label class="col-xs-6">Stock<span class="validatestar">*</span></label>
+                      <div class="col-xs-6">
+                            <input type="number" required class="form-control" name="stock" >
+                          <div id="stock_error"></div>
+                        </div>
+                      </div>          
+                    </div> 
+
+                    <div class="form-group">
+                        <div id="img_div">
+                      <label class="col-xs-6">Upload Image<span class="validatestar">*</span></label>
+                      <div class="col-xs-6">
+                            <input type="file" required class="form-control-file" name="img" id="img">
+                          <div id="image_error"></div>
+                        </div>
+                      </div>          
+                    </div>
                     
                     <div style="text-align: center;">
                       <button type="submit" class="btn btn-success btn-md" name="form1_submit">Add Product</button>

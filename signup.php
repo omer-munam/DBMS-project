@@ -219,9 +219,8 @@ class Signup
                             </div> -->
                         </div>
                         <div class="submit-btn-area">
-                            <button id="form_submit" name="signup" type="submit">SIGN UP<i class="ti-arrow-right"></i></button><br>
-                            <button id="form_submit" name="signin" type="submit"><a href="index.php">SIGN IN</a><i class="ti-arrow-right"></i></button><br>
-                            <div>
+                            <button id="form_submit" name="signup" type="submit">SIGN UP<i class="ti-arrow-right"></i></button>
+                        <div>
                            <!--  <a href="">Signup</a> -->
 
                             </div>
@@ -368,7 +367,7 @@ class Signup
     if (contact.value != "") {
    // shop_name.style.border = "1px solid #5cd3b4";
    document.getElementById('contact_div').style.color = "#5cd3b4";
-   contact.innerHTML = "";
+   contact_error.innerHTML = "";
    return true;
   }}
 

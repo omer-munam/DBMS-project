@@ -38,23 +38,7 @@
 <form action="#" method="POST"  class="form-horizontal"  enctype="multipart/form-data" onsubmit="return Validate()" name="bform" id="uploadForm">
     <div>
         <div class="container">
-            <div class="row justify-content-center">
-
-                <div class="col-lg-10 bg-light rounded my-2 py-2">
-                    <table id="example" class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th width="100px"> ID</th>
-                                <th> Name</th>
-                                <th> Brand</th>
-                                <th> Category</th>
-                                <th> Color</th>
-                                <th> Price</th>
-                                <th> Seller</th>
-                                <th> Action </th>
-                            </tr>
-                        </thead>
-                        <tbody>
+            <div class="row">
                             <?php
                                 mysqli_set_charset($conn, 'utf8');
                                 $user_id =  $_SESSION['id'];
@@ -70,27 +54,39 @@
                                             $prod_color =  $row['p_color'];
                                             $prod_brand =  $row['p_brand'];
                                             $prod_cat = $row['p_cat'];
-                                            $seller_id =   mysqli_query($conn, "SELECT s_id from seller_prod_rel WHERE p_id = '$id'")->fetch_assoc()['s_id'];
-                                            $seller_name = mysqli_query($conn, "SELECT fname from users WHERE id = $seller_id")->fetch_assoc()['fname'];
+                                            $stock = $row['stock'];
+                                            $imgURL = $row['imgURL'];
                             ?>
-                            <tr>
-                                <td style="background-color: #ffffff"><?php echo  $id ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_name ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_brand ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_cat ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_color ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
-                                <td style="background-color: #ffffff"><?php echo  $seller_name ?></td>
-                                <td style="background-color: #ffffff"><!-- Button trigger modal -->
-                                <a class="btn btn-success btn-xs" href="buy.php?id=<?php echo $id?>&name=<?php echo $prod_name?>">Buy</a>
-                                </td>
-                            </tr>
-                            <?php }} ?>
+                            
+                                <div class="col-md-4">
+                                    <div class="card d-flex align-items-center pt-1" style="width: 18rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                                        <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px;">
+                                            <img src="<?php echo  $imgURL ?>" alt="Card image cap" style="height: auto; width: 180px;">
+                                        </div>
+                                        <div class="card-body w-100">
+                                            <h5 class="card-title" style="display: inline-block;"><?php echo  $prod_name ?></h5> <p style="display: inline-block;">(<?php echo  $prod_brand ?>)</p>
+                                            <p class="card-text">Rs <?php echo  $prod_price ?>/-</p>
+                                            <a class="btn btn-success btn-xs" href="buy.php?id=<?php echo $id?>&name=<?php echo $prod_name?>&error=">Buy</a>
+                                            <a class="btn btn-primary btn-xs" href="product.php?id='<?php echo $id?>'">Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            <!-- <tr>
+                                <td style="background-color: #ffffff"></td>
+                                <td style="background-color: #ffffff"></td>
+                                <td style="background-color: #ffffff"></td>
+                                <td style="background-color: #ffffff"></td>
+                                <td style="background-color: #ffffff"></td>
+                                <td style="background-color: #ffffff"></td>
+                                <td style="background-color: #ffffff"></td>
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                <td style="background-color: #ffffff">
+                                    
+                                </td>
+                            </tr> -->
+                            <?php }} ?>
+                            </div>
         </div>
     </div>
 </form>

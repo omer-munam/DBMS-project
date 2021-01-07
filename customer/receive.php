@@ -3,7 +3,7 @@
     if(isset($_GET['id'])) {
         $id = $_GET['id'];
 
-        $query = "DELETE FROM orders WHERE o_id = $id";
+        $query = "UPDATE orders SET confirmed = 'received' WHERE o_id = $id";
 
         if ($conn->query($query)===true) {
             echo "<script>  setTimeout(function() {

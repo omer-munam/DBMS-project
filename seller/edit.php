@@ -1,6 +1,7 @@
 <?php
     session_start();
     include("../includes/connection.php");
+    require_once "../vendor/autoload.php";
 
 
     if (!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] !== 1) {
@@ -8,6 +9,13 @@
         die();
     }
 
+    \Cloudinary::config(array( 
+        "cloud_name" => 'dzmhafzdk', 
+        "api_key" => '691945255776953', 
+        "api_secret" => 'Z8DlmlIEhunlqxf_oL7Wt9eyk3Q'
+    ));
+    
+    $target_dir = "./uploads/";
     
 
     if (isset($_POST["confirmchanges"])) {
@@ -17,8 +25,25 @@
         $cat = $_POST['cat'];
         $color = $_POST['color'];
         $price = $_POST['price'];
+        $stock = $_POST['stock'];
+        $img = $_FILES["img"]["name"];
+        $oldURL = $_POST['url'];
+        
+        if($img !== '') {
+            $target_file = $target_dir . basename($_FILES["img"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-        $query = "UPDATE product SET p_name = '$name', p_brand = '$brand', p_cat = '$cat', p_color = '$color', p_price = '$price' WHERE p_id = '$id'";
+            move_uploaded_file($_FILES["img"]["tmp_name"], $target_file);
+        
+            $arr_result = \Cloudinary\Uploader::upload(__DIR__.$target_file);
+            // print_r($arr_result['secure_url']);
+            $imgURL = $arr_result['secure_url'];
+        } else {
+            $imgURL = $oldURL;
+        }
+        
+
+        $query = "UPDATE product SET p_name = '$name', p_brand = '$brand', p_cat = '$cat', p_color = '$color', p_price = '$price', stock = '$stock', imgURL = '$imgURL' WHERE p_id = '$id'";
 
         if ($conn->query($query)==true) {
             header('location: ./MyProducts.php');
@@ -34,6 +59,7 @@
     $query = "SELECT * FROM product WHERE p_id = $prod_id";
     $result = mysqli_query($conn, $query);
     $product = $result->fetch_assoc();
+    $oldURL = $product['imgURL'];
 
     include('../includes/header.php');
 ?>
@@ -124,10 +150,31 @@
                             <div id="product_name_error"></div>
                         </div>
                         </div>          
-                    </div>  
+                    </div>
+
+                    <div class="form-group">
+                        <div id="stock_div">
+                      <label class="col-xs-6">Stock<span class="validatestar">*</span></label>
+                      <div class="col-xs-6">
+                            <input type="number" required class="form-control" name="stock" value="<?php echo $product['stock'] ?>">
+                          <div id="stock_error"></div>
+                        </div>
+                      </div>          
+                    </div>
+
+                    <div class="form-group">
+                        <div id="img_div">
+                      <label class="col-xs-6">Upload Image</label>
+                      <div class="col-xs-6">
+                            <input type="file" class="form-control-file" name="img" id="img">
+                          <div id="image_error"></div>
+                        </div>
+                      </div>          
+                    </div> 
                     
                     <div style="text-align: center;">
                         <input type="hidden" name="id" value="<?php echo $product['p_id']; ?>">
+                        <input type="hidden" name="url" value="<?php echo $oldURL; ?>">
                         <button type="submit" class="btn btn-success btn-md" name="confirmchanges">Confirm Changes</button>
                     </div>
                     </div>                  

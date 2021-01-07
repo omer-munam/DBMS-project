@@ -44,10 +44,10 @@
                     <table id="example" class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th width="100px"> Order ID</th>
                                 <th> Product Name</th>
                                 <th> Product Brand</th>
                                 <th> Product Color</th>
+                                <th> Quantity</th>
                                 <th> Total</th>
                                 <th> Order Date </th>
                                 <th> Status </th>
@@ -70,22 +70,26 @@
                                             $prod_price =  $row['p_price'] * $row['qty'];
                                             $prod_color =  $row['p_color'];
                                             $prod_brand =  $row['p_brand'];
+                                            $qty =  $row['qty'];
                                             $date = $row['ordered_at'];
                                             $status = $row['confirmed'];
+                                            $new_stock = $row['stock'] + $qty;
                             ?>
                             <tr>
-                                <td style="background-color: #ffffff"><?php echo  $ord_id ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_name ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_brand ?></td>                                
                                 <td style="background-color: #ffffff"><?php echo  $prod_color ?></td>
+                                <td style="background-color: #ffffff"><?php echo  $qty ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $prod_price ?></td>
                                 <td style="background-color: #ffffff"><?php echo  $date ?></td>
                                 <td style="background-color: #ffffff; font-style: italic;"><?php echo  $status ?></td>
                                 <td style="background-color: #ffffff">
                                     <?php if($status === 'pending') { ?>
-                                        <a class="btn btn-danger btn-xs" href="delOrder.php?id='<?php echo $ord_id ?>'">Cancel</a>
+                                        <a class="btn btn-danger btn-xs" href="delOrder.php?id='<?php echo $ord_id ?>'&p_id='<?php echo $row['p_id'] ?>'&new_stock='<?php echo $new_stock?>'">Cancel</a>
                                     <?php } else if($status == 'confirmed') { ?>
                                         <a class="btn btn-success btn-xs" href="receive.php?id='<?php echo $ord_id ?>'">Received</a>
+                                    <?php } else if($status == 'received') { ?>
+                                        <p>No Action</p>
                                     <?php } ?>
                                 </td>
                             </tr>
